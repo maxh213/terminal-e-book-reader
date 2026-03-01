@@ -1,0 +1,182 @@
+.TH TREAD 1 "March 2026" "tread 0.1.0" "User Commands"
+.SH NAME
+tread \- terminal EPUB reader
+.SH SYNOPSIS
+.B tread
+[\fIOPTIONS\fR] \fIfile.epub\fR
+.SH DESCRIPTION
+.B tread
+is a terminal-based EPUB reader with support for text formatting, link
+following, table of contents navigation, theme customization, and reading
+position persistence.
+.PP
+It supports both EPUB 2 and EPUB 3 formats and renders XHTML content with
+bold, italic, underline, and heading formatting using ncurses.
+.SH OPTIONS
+.TP
+.B \-\-vi
+Use vi-style keybindings instead of the default nano-style bindings.
+.TP
+.BI \-\-theme " NAME"
+Use the named color theme. Available themes can be browsed using the
+in-application theme selector.
+.TP
+.B \-\-no\-restore
+Don't restore the previous reading position. Start from the beginning
+of the book.
+.TP
+.BR \-h ", " \-\-help
+Display usage information and exit.
+.TP
+.BR \-v ", " \-\-version
+Display version information and exit.
+.SH NANO-STYLE KEYBINDINGS (DEFAULT)
+.TP
+.B Arrow Down/Up
+Scroll down/up one line.
+.TP
+.B PgDn, Space
+Scroll down one page.
+.TP
+.B PgUp, Backspace
+Scroll up one page.
+.TP
+.B Ctrl+N
+Next chapter.
+.TP
+.B Ctrl+P
+Previous chapter.
+.TP
+.B Ctrl+T
+Open table of contents.
+.TP
+.B Ctrl+W
+Search.
+.TP
+.B Tab / Shift+Tab
+Cycle forward/backward through links.
+.TP
+.B Enter
+Follow selected link, or scroll down if no link is selected.
+.TP
+.B Ctrl+B
+Go back (after following a link).
+.TP
+.B Ctrl+E
+Open theme selector.
+.TP
+.B Ctrl+G
+Show help.
+.TP
+.B Ctrl+X
+Quit.
+.SH VI-STYLE KEYBINDINGS
+.TP
+.B j/k, Arrow Down/Up
+Scroll down/up one line.
+.TP
+.B Ctrl+F, Space, PgDn
+Scroll down one page.
+.TP
+.B Ctrl+B, PgUp
+Scroll up one page.
+.TP
+.B Ctrl+D / Ctrl+U
+Scroll down/up half a page.
+.TP
+.B l/h, ]/[
+Next/previous chapter.
+.TP
+.B t
+Open table of contents.
+.TP
+.B /
+Search forward.
+.TP
+.B ?
+Search backward.
+.TP
+.B n / N
+Next/previous search match.
+.TP
+.B Tab / Shift+Tab
+Cycle forward/backward through links.
+.TP
+.B Enter
+Follow selected link.
+.TP
+.B Backspace
+Go back.
+.TP
+.B T
+Open theme selector.
+.TP
+.B q
+Quit.
+.SH CONFIGURATION
+Configuration is read from
+.IR ~/.config/tread/tread.conf .
+.PP
+Example configuration:
+.PP
+.nf
+.RS
+# Keybinding mode: nano (default) or vi
+mode = vi
+
+# Default theme name
+theme = dark
+.RE
+.fi
+.SH THEMES
+Themes are stored as INI files in
+.IR ~/.config/tread/themes/*.conf .
+.PP
+Colors are ncurses color numbers (0\-7 for basic colors, 0\-255 for extended),
+or \fB\-1\fR / \fBdefault\fR for the terminal default color.
+.PP
+Example theme file:
+.PP
+.nf
+.RS
+name = solarized
+fg = 12
+bg = 8
+status_fg = 0
+status_bg = 3
+link_fg = 4
+link_bg = -1
+heading_fg = 3
+heading_bg = -1
+.RE
+.fi
+.PP
+Three built-in themes are included: \fBdefault\fR, \fBdark\fR, and \fBlight\fR.
+.SH STATE PERSISTENCE
+Reading position is automatically saved on exit and restored when reopening
+the same file. State files are stored in
+.IR ~/.local/share/tread/state/ .
+.SH FILES
+.TP
+.I ~/.config/tread/tread.conf
+Main configuration file.
+.TP
+.I ~/.config/tread/themes/*.conf
+Custom theme files.
+.TP
+.I ~/.local/share/tread/state/
+Saved reading positions.
+.SH EXIT STATUS
+.TP
+.B 0
+Successful execution.
+.TP
+.B 1
+Error (invalid arguments, cannot open file, etc).
+.SH AUTHOR
+Written as an open-source project.
+.SH BUGS
+Report bugs at the project's issue tracker.
+.SH SEE ALSO
+.BR less (1),
+.BR epub (5)
